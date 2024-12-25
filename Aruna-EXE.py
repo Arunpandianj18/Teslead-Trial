@@ -248,7 +248,7 @@ def main_thread():
                     if len(matching_files) > 0 and u0024saPDF == 1:
                         convert_xlsx_to_pdf(xlsx_file, pdf_file)
                         print("Conversion completed")
-                        u0024saPDF = 0
+                        u0024saPDF = 0       #Wait PDF
         if wait_flag == 1:
             u0024saPDF = 1
             teslead_db.execute(f"update master_ip_address SET auto_manual={auto_manual};")

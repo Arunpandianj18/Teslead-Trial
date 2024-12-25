@@ -255,7 +255,7 @@ def main_thread():
             teslead_db.commit()
             teslead_db.execute(f"update alarm set code={alarm} where status=0;")
             
-            if cycle_start == 1 and u0024sa13 == 1 and station1_status == 1:
+            if cycle_start == 1 and u0024sa13 == 1 and station1_status == 1:         # Condition 1
                 teslead_db.execute("update pressure_analysis set pressure=%s, hydro_pressure=%s, result_pressure=%s, actual_time=%s, valve_status=%s, extn_rt=%s, cycle_start=NOW(), date_time=NOW(), start_graph=0 where status='1' and station_status='1';" % (actual_pressure, hydraulic_pressure, result_pressure, actual_time, valve_status, oring_dia))
                 teslead_db.commit()
                 teslead_db.execute("insert into current_status (sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type) select sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type from pressure_analysis where status='1' and station_status='1';")
@@ -265,7 +265,7 @@ def main_thread():
                 pushstatus(2102, u0024sa13)
                 pushstatus(2103, u0024sa14) 
                 
-            if cycle_start == 0 and u0024sa13 == 0 and station1_status == 1:
+            if cycle_start == 0 and u0024sa13 == 0 and station1_status == 1:         # Condition 2
                 teslead_db.execute("update pressure_analysis set pressure=%s, hydro_pressure=%s, result_pressure=%s, actual_time=%s, valve_status=%s, extn_rt=%s, cycle_end=NOW(), date_time=NOW(), start_graph=0 where status='1' and station_status='1';" % (actual_pressure, hydraulic_pressure, result_pressure, actual_time, valve_status, oring_dia))
                 teslead_db.commit()
                 teslead_db.execute("insert into current_status (sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type) select sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type from pressure_analysis where status='1' and station_status='1';")
@@ -275,13 +275,13 @@ def main_thread():
                 pushstatus(2102, u0024sa13)
                 pushstatus(2103, u0024sa14)
 
-            if cycle_start == 1 and start_stop == 0 and station1_status == 1:
+            if cycle_start == 1 and start_stop == 0 and station1_status == 1:        # Condition 3
                 teslead_db.execute("update pressure_analysis set pressure=%s, hydro_pressure=%s, result_pressure=%s, actual_time=%s, valve_status=%s, extn_rt=%s, date_time=NOW(), start_graph=0 where status='1' and station_status='1';" % (actual_pressure, hydraulic_pressure, result_pressure, actual_time, valve_status, oring_dia))
                 teslead_db.commit()
                 teslead_db.execute("insert into current_status (sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type) select sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type from pressure_analysis where status='1' and station_status='1';")
                 teslead_db.commit()
 
-            if start_stop == 1 and u0024sa11 == 1:
+            if start_stop == 1 and u0024sa11 == 1:   # Condition 4
                 if station1_status == 1:
                     teslead_db.execute("update pressure_analysis set pressure=%s, start_pressure=%s, actual_time=%s, start=NOW(), valve_status=%s, extn_rt=%s, start_graph=1, date_time=NOW() where status='1' and station_status='1';" % (actual_pressure, actual_pressure, actual_time, valve_status, oring_dia))
                     teslead_db.commit()
@@ -292,14 +292,14 @@ def main_thread():
                     pushstatus(2101, u0024sa11)
                     pushstatus(2102, u0024sa12)
 
-            if start_stop == 1:
+            if start_stop == 1:                                  # Condition 5
                 if station1_status == 1:
                     teslead_db.execute("update pressure_analysis set pressure=%s, hydro_pressure=%s, actual_time=%s, valve_status=%s, extn_rt=%s, start_graph=1, date_time=NOW() where status='1' and station_status='1';" % (actual_pressure, hydraulic_pressure, actual_time, valve_status, oring_dia))
                     teslead_db.commit()
                     teslead_db.execute("insert into current_status (sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type) select sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type from pressure_analysis where status='1' and station_status='1';")
                     teslead_db.commit()
 
-            if start_stop == 0 and u0024sa12 == 0:
+            if start_stop == 0 and u0024sa12 == 0:           # Condition 6
                 if station1_status == 1:
                     teslead_db.execute("update pressure_analysis set pressure=%s, result_pressure=%s, gauge_drop=%s, end=NOW(), valve_status=%s, extn_rt=%s, start_graph=1, date_time=NOW() where status='1' and station_status='1';" % (actual_pressure, result_pressure, leak_pressure, valve_status, oring_dia))
                     teslead_db.commit()
@@ -310,7 +310,7 @@ def main_thread():
                     pushstatus(2102, u0024sa12)
                     pushstatus(2101, u0024sa11)
 
-            if start_stop == 0 and cycle_start == 0 and station1_status == 1:
+            if start_stop == 0 and cycle_start == 0 and station1_status == 1:                # Condition 7
                 teslead_db.execute("update pressure_analysis set pressure=%s, hydro_pressure=%s, extn_rt=%s, start_graph=0, date_time=NOW() where status='1' and station_status='1';" % (actual_pressure, hydraulic_pressure, oring_dia))
                 teslead_db.commit()
                 teslead_db.execute("insert into current_status (sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type) select sales_order_no, sales_item_no, valve_serial_number, pressure, hydro_pressure, date_time, start_graph, test_type from pressure_analysis where status='1' and station_status='1';")

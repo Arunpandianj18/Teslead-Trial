@@ -1,0 +1,151 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    padding: 30px;
+    font-family: calibri;
+}
+
+.body-grid{
+    display: grid;
+    align-items: center;
+    gap: 50px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 70px;
+    font-weight: bold;
+}
+
+.titlebar {
+    grid-column: span 3;
+    /* display: flex; */
+    /* justify-content: space-between;
+    align-items: center; */
+    margin-bottom: 30px;
+}
+ 
+.logo > img {
+    width: 15em;
+}
+
+.title {
+    text-align: center;
+    position: relative;
+    top: 10px;
+    font-size: 1.5em;
+} 
+
+.cellid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-weight: bold;
+}
+
+.cellid > span:nth-child(2){
+    background-color: red;
+    color: white;
+    padding: 5px 50px;
+    border-radius: 5px;
+}
+
+.item {
+    width: 80%;
+}
+
+.item > label{
+    font-size: 1.2em;
+}
+
+.item > input, .item select {
+    width: 125%;
+    border: 0px;
+    border-bottom: 1px solid #000000;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.item > input:focus{
+    outline: none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    gap: 20px;
+}
+
+.buttons form {
+    display: flex;
+    gap: 20px;
+}
+
+.buttons button {
+    font-size: 1.2em;
+    width: 8em;
+    height: 1.8em;
+    border-radius: 5px;
+    border: 0px;
+    background-color: red;
+    color: white;
+}
+
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000099;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    transition-duration: 0.5s;
+    opacity: 0;
+    display: none;
+}
+
+.overlay .close {
+    font-size: 2em;
+    color: white;
+    margin: 70px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    
+}
+
+.hide {
+    opacity: 0;
+}
+
+.productDetails {
+    width: 50vw;
+    height: 60vh;
+    position: absolute;
+    background-color: white;
+    border: 2px solid black;
+    left: 25vw;
+    top: 20vh;
+    transition-duration: 0.5s;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.productDetails table {
+    width: 100%;
+    text-align: left;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+.productDetails table th[colspan]{
+    text-align: center;
+    font-size: 2em;
+}
+
+.productDetails table th, .productDetails table td {
+    padding-left: 10px;
+}

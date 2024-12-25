@@ -1,0 +1,991 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/Live Status.css' %}" />
+  </head>
+  <body>
+    <div id="overlay">
+      <div id="rffcontainer">
+        <h2>Reason for failure</h2>
+        <!-- <div class="field">
+          <label for="airshell">Airshell</label>
+          <select name="airshell">
+            <option value="reason for failure 1">reason for faulure 1</option>
+            <option value="reason for failure 2">reason for faulure 2</option>
+            <option value="reason for failure 3">reason for faulure 3</option>
+            <option value="reason for failure 4">reason for faulure 4</option>
+            <option value="reason for failure 5">reason for faulure 5</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="airshell">Airseat</label>
+          <select name="airseat">
+            <option value="reason for failure 1">reason for faulure 1</option>
+            <option value="reason for failure 2">reason for faulure 2</option>
+            <option value="reason for failure 3">reason for faulure 3</option>
+            <option value="reason for failure 4">reason for faulure 4</option>
+            <option value="reason for failure 5">reason for faulure 5</option>
+          </select>
+        </div> -->
+        <div class="buttons">
+          <button onclick="addreasons()">Complete</button>
+          <button onclick="closeRFFbox()">Cancel</button>
+        </div>
+        <div class="addoptionstodropdown">
+          <div class="field">Add a reason</div>
+          <input type="text" name="reason" />
+        </div>
+        <div class="buttons">
+          <button onclick="addreason()">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="titlelayer">
+      <div class="title-img forbeslogo">
+        <img src="{% static 'css/images/forbes.png' %}" alt="" />
+      </div>
+      <div class="title">
+        <h4>LIVE STATUS - R12 PORTAL</h4>
+        <div class="liveborder"></div>
+        <div class="rectangle">
+          <div>
+            <div id="circle">
+              <div id="innercircle"><div id="innerdot"></div></div>
+            </div>
+            <div>HMI Connection Live</div>
+          </div>
+          <div>
+            <div class="r12circle" id="circle">
+              <div id="innercircle" class="r12innercircle">
+                <div id="innerdot" class="r12innerdot"></div>
+              </div>
+            </div>
+            <div>R12 Connection Live</div>
+          </div>
+        </div>
+      </div>
+      <div class="title-img tesleadlogo">
+        <img src="{% static 'css/images/teslead.png' %}" alt="" />
+      </div>
+    </div>
+
+    <div class="topgrid">
+      <div class="div rowspan4 first">
+        <div onclick="window.location.href = 'r12_dashboardview'" class="item">
+          Home
+        </div>
+      </div>
+      <div class="div colspan4 second moveleft">
+        <div id="fontinc"><h2>Machine Mode</h2></div>
+        <div id="auto"></div>
+      </div>
+      <div id="yellowbox" class="div rowspan2 tracker">
+        <div>
+          <span>SET PRESSURE</span><br />
+          <span id="set_pressure">0<span>BAR</span></span>
+        </div>
+      </div>
+      <div id="yellowbox" class="div rowspan2 tracker">
+        <div>
+          <span>SET TIME</span><br />
+          <span id="set_time">0<span>SEC</span></span>
+        </div>
+      </div>
+      <div class="div colspan2 end2end moveleft">
+        <div>Serial Number</div>
+        <div id="valve_serial_number">{{datas.valve_serial_number}}</div>
+      </div>
+      <div class="div colspan2 end2end moveleft">
+        <div>Product</div>
+        <div>--</div>
+      </div>
+      <div class="div colspan2 end2end moveleft">
+        <div>Size and Class</div>
+        <div id="valve_size">{{datas.sizeclass}}</div>
+      </div>
+      <div class="div colspan2 end2end moveleft">
+        <div>Operator</div>
+        <div id="tested_by">{{ datas.loggedin_user }}</div>
+      </div>
+      <div class="div rowspan2 tracker endtrack">
+        <div class="bgred">
+          <span>ACTUAL PRESSURE</span><br />
+          <span id="pressure">0<span>BAR</span></span>
+        </div>
+      </div>
+      <div class="div rowspan2 tracker">
+        <div class="bgred">
+          <span>ACTUAL TIME</span><br />
+          <span id="actual_time">0<span>SEC</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottomgrid">
+      <div class="machinestatus">
+        <div class="title">Machine Status</div>
+        <div class="list">
+          <div class="div clamping">CLAMPING</div>
+          <div class="div prefilling">PREFILLING</div>
+          <div class="div booster">BOOSTER</div>
+          <div class="div pressurizing">PRESSURING</div>
+          <div class="div timeron">TIMER ON</div>
+          <div class="div timeroff">TIMER OFF</div>
+          <div class="div depressurizing">DEPRESSURIZING</div>
+          <div class="div declamping">DECLAMPING</div>
+          <div class="div dooropen">DOOR OPEN</div>
+          <div class="div doorclose">DOOR CLOSE</div>
+        </div>
+      </div>
+
+      <div class="actionbuttons">
+        <div class="title">Action Buttons Status</div>
+        <div class="list">
+          <div id="actioncycle" class="green cyclestart">CYCLE START</div>
+          <div id="actiontimer">TIMER OFF</div>
+          <div id="actionprefilling" class="green prefillingon">
+            PREFILLING ON
+          </div>
+          <div id="actiondepressurizing" class="depressurizing">
+            PRESSURE <br />
+            DRAIN OFF
+          </div>
+          <div id="actionbooster">BOOSTER OFF</div>
+          <div id="actionvacuum">VACUUM OFF</div>
+          <div id="actionvent">VENT OFF</div>
+          <div id="actionair">AIR OFF</div>
+          <div id="actionemergency" class="r">
+            EMERGENCY <br />
+            STOP
+          </div>
+        </div>
+      </div>
+
+      <div class="teststatus first">
+        <div class="statusitem middle">
+          <div class="prop">Start Pressure</div>
+          <div class="vu">
+            <div id="start_pressure" class="value">0</div>
+            <div class="unit">BAR</div>
+          </div>
+        </div>
+        <div class="statusitem middle">
+          <div class="prop">End Pressure</div>
+          <div class="vu">
+            <div id="end_pressure" class="value">0</div>
+            <div class="unit">BAR</div>
+          </div>
+        </div>
+        <div class="statusitem middle">
+          <div class="prop">Bubble Count</div>
+          <div class="vu">
+            <div id="bubblecountvalue" class="value">0</div>
+            <div class="unit">Bubbles</div>
+          </div>
+        </div>
+
+        <div class="statusitem middle">
+          <div class="prop">Air shell leak</div>
+          <div class="vu">
+            <div id="airshellleakvalue" class="value">0</div>
+            <div class="unit">ps/sec</div>
+          </div>
+        </div>
+
+        <div class="statusitem middle">
+          <div class="prop">Air seat leak</div>
+          <div class="vu">
+            <div id="airseatleakvalue" class="value">0</div>
+            <div class="unit">nm3/hr</div>
+          </div>
+        </div>
+
+        <div class="statusitem middle">
+          <div class="prop">Settling time</div>
+          <div class="vu">
+            <div class="value">0</div>
+            <div class="unit">UNIT</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tsrtt">
+        <div class="statusitem scale" id="test">
+          <div class="prop">Test Status</div>
+          <div id="valve_status" class="value">Ready to test</div>
+        </div>
+
+        <div class="statusitem middle scale end" id="result">
+          <div class="prop">Result</div>
+          <div id="status_result" class="value">Test Passed</div>
+        </div>
+      </div>
+
+      <div class="testbuttons">
+        <!-- <div class="title">Test Buttons</div> -->
+        <div id="airshell" onclick="airshellfunction()" class="item">
+          Air shell
+        </div>
+        <div id="airseat" onclick="airseatfunction()" class="item">
+          Air seat
+        </div>
+        <div id="hydroshell" onclick="hydroshellfunction()" class="item">
+          Hydro shell
+        </div>
+        <div id="hydroseat" onclick="hydroseatfunction()" class="item">
+          Hydro seat
+        </div>
+        <div
+          id="cyclecompleted"
+          onclick="cyclecompletefunction()"
+          class="item cycle"
+        >
+          CYCLE COMPLETED
+        </div>
+      </div>
+      <div class="temptable">
+        <table id="testingparametertable" border="1">
+          <tr>
+            <td>Cell Id</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>Header Id</td>
+            <td>col1</td>
+          </tr>
+          <tr>
+            <td>Test Id</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>Test Media</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>Item Code</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>INV Item Id</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>Job Number</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>WIP Entity Id</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>Actuator Action</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>INV ORG</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>Model Number</td>
+            <td>data</td>
+          </tr>
+        </table>
+      </div>
+      <div class="alarmmessage">
+        <!-- the default message is AlARM MESSAGE and the background should blink in red color -->
+        <h1 id="alarmmsg" class="msg">Message</h1>
+      </div>
+    </div>
+    <form action="#">{% csrf_token %}</form>
+    <script>
+      csrfToken = document.querySelector(
+        'input[name="csrfmiddlewaretoken"]'
+      ).value;
+      async function getavailabletests() {
+        var serial = document.getElementById("valve_serial_number").innerHTML;
+        var formdata = new FormData();
+        formdata.append("serial", serial);
+        var response = await fetch("/getavailabletests", {
+          method: "post",
+          headers: {
+            "X-CSRFToken": csrfToken,
+          },
+          body: formdata,
+        });
+        var data = await response.text();
+        data = data.split("-");
+        for (let test of data) {
+          if (test == "Arca Air Shell") {
+            // alert("airshell")
+            document.getElementById("airshell").style.backgroundColor = "black";
+          } else if (test == "Arca Air Seat") {
+            // alert("airseat")
+            document.getElementById("airseat").style.backgroundColor = "black";
+          } else if (test == "Arca Hydro Shell") {
+            // alert("hydroshell")
+            document.getElementById("hydroshell").style.backgroundColor =
+              "black";
+          } else if (test == "Arca Hydro Seat") {
+            // alert("hydroseat")
+            document.getElementById("hydroseat").style.backgroundColor =
+              "black";
+          }
+        }
+      }
+
+      getavailabletests();
+
+      async function airshellfunction() {
+        try {
+          console.log("%cStarting AirShell function", "color:yellow");
+          var automanual = document.getElementById("auto").innerHTML;
+          if (automanual == "Manual") {
+            var response = await fetch("live_status/airshellfunction");
+            result = await response.text();
+            if (result !== "error") {
+              console.log(
+                "%cAirShell function successfully completed",
+                "color:yellow"
+              );
+            }
+
+            testparameterdata();
+          }
+        } catch (error) {
+          console.log("%c[Error] : " + errorl, "color:red");
+        }
+      }
+
+      async function airseatfunction() {
+        try {
+          var automanual = document.getElementById("auto").innerHTML;
+          if (automanual == "Manual") {
+            console.log("%cStarting AirSeat function", "color:yellow");
+            var response = await fetch("live_status/airseatfunction");
+            result = await response.text();
+            if (result !== "error") {
+              console.log(
+                "%cAirSeat function successfully completed",
+                "color:green"
+              );
+            }
+
+            testparameterdata();
+          }
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+      }
+
+      async function hydroshellfunction() {
+        try {
+          var automanual = document.getElementById("auto").innerHTML;
+          if (automanual == "Manual") {
+            console.log("%cStarting HydroShell function");
+            var response = await fetch("live_status/hydroshellfunction");
+            result = await response.text();
+            if (result !== "error") {
+              console.log(
+                "%cHydroShell function successfully completed",
+                "color:green"
+              );
+            }
+
+            testparameterdata();
+          }
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+      }
+
+      async function hydroseatfunction() {
+        try {
+          var automanual = document.getElementById("auto").innerHTML;
+          if (automanual == "Manual") {
+            console.log("%cStarting HydroSeat function");
+            var response = await fetch("live_status/hydroseatfunction");
+            result = await response.text();
+            if (result !== "error") {
+              console.log(
+                "%cHydroSeat function successfully completed",
+                "color:green"
+              );
+            }
+
+            testparameterdata();
+          }
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+      }
+
+      async function testparameterdata() {
+        try {
+          var response = await fetch("live_status/gettestingparameterdata");
+          var data = await response.json();
+          console.log(data);
+          var table = document.getElementById("testingparametertable");
+          var rowlist = table.querySelectorAll("tr > td:nth-child(2)");
+          console.log(rowlist);
+          var index = 0;
+          for (let key in data) {
+            rowlist[index].innerHTML = data[key];
+            index++;
+          }
+        } catch (error) {
+          console.log("[Error] : " + error);
+        }
+      }
+
+      async function gettestbuttonstatus() {
+        try {
+          console.log("gettestbuttonstatus");
+          var response = await fetch("live_status/gettestbuttonstatus");
+          var result = await response.text();
+          var [type, color] = result.split(":");
+          console.log(result);
+          console.log(color);
+          type = type.toLocaleLowerCase();
+          if (type === "air shell") {
+            document.getElementById("airshell").style.backgroundColor = color;
+          } else if (type === "air seat") {
+            document.getElementById("airseat").style.backgroundColor = color;
+          } else if (type === "hydro shell") {
+            document.getElementById("hydroshell").style.backgroundColor = color;
+          } else if (type === "hydro seat") {
+            document.getElementById("hydroseat").style.backgroundColor = color;
+          }
+        } catch (error) {
+          console.log("[Error] : " + error);
+        }
+      }
+
+      function addfield(fieldname, reasons, index){
+        var field = document.createElement("div")
+        field.setAttribute("class", "field")
+
+        var label = document.createElement("label")
+        label.setAttribute("for", fieldname)
+        label.innerHTML = fieldname
+
+        var select = document.createElement("select")
+        select.setAttribute("name", fieldname)
+
+        reasons.forEach(item => {
+          var option = document.createElement("option")
+          option.setAttribute("value", item.reason)
+          option.innerHTML = item.reason
+          select.appendChild(option)
+        })
+
+        field.appendChild(label)
+        field.appendChild(select)
+        var node = document.querySelector("#rffcontainer").children[index]
+        document.querySelector("#rffcontainer").insertBefore(field, node)
+
+      }
+
+      async function cyclecompletefunction() {
+        console.log("cyclecompletefunction");
+        var response = await fetch("/getallreasons")
+        var result = await response.json();
+        console.log(result)
+        var num = 1;
+        document.querySelectorAll(".testbuttons > div").forEach(button => {
+          if (button.style.backgroundColor == "red"){
+            var buttonname = button.innerHTML.trim().split(" ")[0] + button.innerHTML.trim().split(" ")[1]
+            console.log(button.innerHTML.trim())
+            console.log("button name : " + buttonname)
+            addfield(buttonname, result, num)
+            num += 1;
+          }
+        })
+
+
+        document.getElementById("overlay").style.visibility = "visible";
+        // window.location.href = "live_status/cyclecompletefunctionr12";
+      }
+
+      async function addreasons() {
+        var formdata = new FormData();
+        document
+          .querySelectorAll("#overlay #rffcontainer > .field")
+          .forEach((field) => {
+            console.log(field.querySelector("label"));
+            var label = field.querySelector("label");
+            var select = field.querySelector("select");
+            formdata.append(label.innerHTML, select.value);
+          });
+
+        var response = await fetch("/transferreasons", {
+          method: "post",
+          headers: {
+            "x-CSRFToken": csrfToken,
+          },
+          body: formdata
+        });
+
+        alert(await response.text())
+
+        window.location.href = "live_status/cyclecompletefunctionr12"
+      }
+
+
+      async function addreason() {
+        var reason = document.querySelector("input[name='reason']")
+        console.log(reason.value)
+        var formdata = new FormData();
+        formdata.append("reason", reason.value);
+        var response = await fetch("/addreason", {
+          method: "post",
+          headers: {
+            "x-CSRFToken": csrfToken,
+          },
+          body: formdata
+        });
+
+        if (await response.text() == "done"){
+          document.querySelectorAll("#overlay select").forEach(box => {
+            var option = document.createElement("option")
+            option.setAttribute("value", reason.value)
+            option.innerHTML = reason.value;
+            box.appendChild(option)
+          })
+          alert("reason added")
+        }
+      }
+
+
+
+
+
+
+
+
+
+      async function getactualpressuretime() {
+        try {
+          var response = await fetch("/getactualpressuretime");
+          var data = await response.json();
+          console.log(data);
+
+          var pressure = document.getElementById("pressure");
+          var time = document.getElementById("actual_time");
+
+          pressarr = pressure.innerHTML.split("<span>");
+          console.log(pressarr);
+
+          pressarr[0] = data.pressure / 10;
+          console.log(pressarr);
+          pressure.innerHTML = pressarr.join("<span>");
+
+          timearr = time.innerHTML.split("<span>");
+          timearr[0] = data.actual_time;
+
+          time.innerHTML = timearr.join("<span>");
+
+          document.getElementById("bubblecountvalue").innerHTML =
+            data.bubble_count;
+          document.getElementById("airshellleakvalue").innerHTML =
+            data.air_shell_leak;
+          document.getElementById("airseatleakvalue").innerHTML =
+            data.air_seat_leak;
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+        // document.getElementById("pressure").innerHTML =
+        //   data.pressure / 10 + "<span>" + pressure_unit + "</span>";
+        // document.getElementById("actual_time").innerHTML =
+        //   data.actual_time +
+        //   "<span>" +
+        //   (data.set_time_unit == "None" ? "Secs" : data.set_time_unit) +
+        //   "</span>";
+      }
+
+      async function get_pressure_analysis_data() {
+        try {
+          console.log("pressure analysis data");
+          var response = await fetch("live_status/get_pressure_analysis_data");
+          var data = await response.json();
+          console.log(data);
+          document.getElementById("set_pressure").innerHTML =
+            data.set_pressure + "<span>" + data.pressure_unit + "</span>";
+          document.getElementById("set_time").innerHTML =
+            data.set_time +
+            "<span>" +
+            (data.set_time_unit == "None" ? "Secs" : data.set_time_unit) +
+            "</span>";
+          //   document.getElementById("pressure").innerHTML =
+          //   data.pressure / 10 + "<span>" + pressure_unit + "</span>";
+          // document.getElementById("actual_time").innerHTML =
+          //   data.actual_time +
+          //   "<span>" +
+          //   (data.set_time_unit == "None" ? "Secs" : data.set_time_unit) +
+          //   "</span>";
+          document.getElementById("start_pressure").innerHTML =
+            data.start_pressure / 10;
+          document.getElementById("end_pressure").innerHTML =
+            data.result_pressure / 10;
+          var status = document.getElementById("valve_status");
+          switch (data.valve_status) {
+            case 0:
+              status.innerHTML = "Leak Observed";
+              break;
+            case 1:
+              status.innerHTML = "No Leak Observed";
+              break;
+            case 2:
+              status.innerHTML = "Running";
+              break;
+            case 3:
+              status.innerHTML = "Ready to Test";
+          }
+
+          var result = document.getElementById("status_result");
+          switch (data.valve_status) {
+            case 0:
+              var response = await fetch("getconfigbadresult");
+              var data = await response.text();
+              result.innerHTML = data;
+              break;
+            case 1:
+              var response = await fetch("getconfiggoodresult");
+              var data = await response.text();
+              result.innerHTML = data;
+              break;
+            default:
+              result.innerHTML = "";
+          }
+        } catch (error) {
+          console.log("[Error] : " + error);
+        }
+      }
+
+      async function automanual() {
+        console.log("automanual");
+        var response = await fetch("live_status/getautomanual");
+        var data = await response.text();
+        document.getElementById("auto").innerHTML = data;
+      }
+
+      async function getalarmmessage() {
+        try {
+          console.log("alarmmessage");
+          var response = await fetch("live_status/getalarmmessage");
+          var data = await response.text();
+          document.getElementById("alarmmsg").innerHTML = data;
+          if (data !== "Alarm Message") {
+            document.getElementsByClassName(
+              "alarmmessage"
+            )[0].style.animationName = "blink";
+          } else {
+            document.getElementsByClassName(
+              "alarmmessage"
+            )[0].style.animationName = "none";
+          }
+        } catch (error) {
+          console.log("[Error] : " + error);
+        }
+      }
+
+      function getactionbuttonstatus(data) {
+        try {
+          // console.log("getting action button status");
+          // var response = await fetch("getactionbuttonstatus");
+          // var data = await response.json();
+          console.log("%cGetting Action button status", "color:yellow");
+          document.getElementsByClassName("clamping")[0].style.backgroundColor =
+            data[0].clamping_status == 1 ? "green" : "black";
+          document.getElementsByClassName(
+            "prefilling"
+          )[0].style.backgroundColor =
+            data[0].prefilling_status == 1 ? "green" : "black";
+          document.getElementsByClassName("booster")[0].style.backgroundColor =
+            data[0].booster_status == 1 ? "green" : "black";
+          document.getElementsByClassName(
+            "pressurizing"
+          )[0].style.backgroundColor =
+            data[0].pressurizing_status == 1 ? "green" : "black";
+          document.getElementsByClassName("timeron")[0].style.backgroundColor =
+            data[0].timer_status == 1 ? "green" : "black";
+          document.getElementsByClassName("timeroff")[0].style.backgroundColor =
+            data[0].timer_status == 0 ? "green" : "black";
+          document.getElementsByClassName(
+            "depressurizing"
+          )[0].style.backgroundColor =
+            data[0].pressure_drain_status == 1 ? "green" : "black";
+          document.getElementsByClassName(
+            "declamping"
+          )[0].style.backgroundColor =
+            data[0].declamping_status == 1 ? "green" : "black";
+          document.getElementsByClassName("dooropen")[0].style.backgroundColor =
+            data[0].door_status == 1 ? "green" : "black";
+          document.getElementsByClassName(
+            "doorclose"
+          )[0].style.backgroundColor =
+            data[0].door_status == 0 ? "green" : "black";
+          document.getElementById("actioncycle").style.backgroundColor =
+            data[0].cycle_status == 1 ? "green" : "red";
+          document.getElementById("actioncycle").innerHTML =
+            data[0].cycle_status == 1 ? "CYCLE START" : "CYCLE STOP";
+          document.getElementById("actiontimer").style.backgroundColor =
+            data[0].timer_status == 1 ? "green" : "red";
+          document.getElementById("actiontimer").innerHTML =
+            data[0].timer_status == 1 ? "TIMER ON" : "TIMER OFF";
+          document.getElementById("actionprefilling").style.backgroundColor =
+            data[0].prefilling_status == 1 ? "green" : "red";
+          document.getElementById("actionprefilling").innerHTML =
+            data[0].prefilling_status == 1 ? "PREFILLING ON" : "PREFILLING OFF";
+          document.getElementById(
+            "actiondepressurizing"
+          ).style.backgroundColor =
+            data[0].pressure_drain_status == 1 ? "green" : "red";
+          document.getElementById("actiondepressurizing").innerHTML =
+            data[0].pressure_drain_status == 1
+              ? "PRESSURE DRAIN ON"
+              : "PRESSURE DRAIN OFF";
+          document.getElementById("actionbooster").style.backgroundColor =
+            data[0].booster_status == 1 ? "green" : "red";
+          document.getElementById("actionbooster").innerHTML =
+            data[0].booster_status == 1 ? "BOOSTER ON" : "BOOSTER OFF";
+          document.getElementById("actionvacuum").style.backgroundColor =
+            data[0].vacuum_status == 1 ? "green" : "red";
+          document.getElementById("actionvacuum").innerHTML =
+            data[0].vacuum_status == 1 ? "VACUUM ON" : "VACUUM OFF";
+          document.getElementById("actionvent").style.backgroundColor =
+            data[0].vent_status == 1 ? "green" : "red";
+          document.getElementById("actionvent").innerHTML =
+            data[0].vent_status == 1 ? "VENT ON" : "VENT OFF";
+          document.getElementById("actionair").style.backgroundColor =
+            data[0].air_status == 1 ? "green" : "red";
+          document.getElementById("actionair").innerHTML =
+            data[0].air_status == 1 ? "AIR ON" : "AIR OFF";
+          // document.getElementById("actionemergency").style.animationName = data[0].emergency_stop_status == 1 ? "blink" : "none";
+          if (data[0].emergency_stop_status == 1) {
+            document
+              .getElementById("actionemergency")
+              .classList.add("actionemergency");
+          } else {
+            document
+              .getElementById("actionemergency")
+              .classList.remove("actionemergency");
+          }
+
+          var pressure = document.getElementById("pressure");
+          var time = document.getElementById("actual_time");
+
+          pressarr = pressure.innerHTML.split("<span>");
+
+          pressarr[0] = data[0].pressure / 10;
+          pressure.innerHTML = pressarr.join("<span>");
+
+          timearr = time.innerHTML.split("<span>");
+          timearr[0] = data[0].actual_time;
+
+          time.innerHTML = timearr.join("<span>");
+
+          document.getElementById("bubblecountvalue").innerHTML =
+            data[0].bubble_count;
+          document.getElementById("airshellleakvalue").innerHTML =
+            data[0].air_shell_leak;
+          document.getElementById("airseatleakvalue").innerHTML =
+            data[0].air_seat_leak;
+          console.log("%cAction button status completed", "color:green");
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+      }
+
+      async function checkhmiconnection() {
+        try {
+          console.log("%cUpdating hmi Connection", "color:yellow");
+          var response = await fetch("checkhmiconnection");
+          var data = await response.text();
+          if (data == "green") {
+            document.getElementById("circle").style.backgroundColor = data;
+            document.getElementById("innerdot").style.backgroundColor = data;
+          } else {
+            document.getElementById("circle").style.backgroundColor =
+              data == "grey" ? "orange" : data;
+            document.getElementById("innerdot").style.backgroundColor =
+              data == "grey" ? "orange" : data;
+          }
+          console.log("%cHMI connection status updated", "color:green");
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+      }
+
+      async function checkr12connection() {
+        try {
+          console.log("%cChecking r12 connection", "color:yellow");
+          var response = await fetch("checkr12connection");
+          var data = await response.text();
+          if (data == "green") {
+            document.getElementsByClassName(
+              "r12circle"
+            )[0].style.backgroundColor = data;
+            document.getElementsByClassName(
+              "r12innerdot"
+            )[0].style.backgroundColor = data;
+          } else {
+            document.getElementsByClassName(
+              "r12circle"
+            )[0].style.backgroundColor = data == "grey" ? "orange" : data;
+            document.getElementsByClassName(
+              "r12innerdot"
+            )[0].style.backgroundColor = data == "grey" ? "orange" : data;
+          }
+          console.log("%cR12 connection status updated", "color:green");
+        } catch (error) {
+          console.log("%c[Error] : " + error, "color:red");
+        }
+      }
+
+      async function checkautotestchange() {
+        await fetch("/checkautotestchange");
+      }
+
+      async function loopevent() {
+        await fetch("/loopevent");
+      }
+
+      var ms = 1000;
+
+      // setInterval(loopevent, ms);
+      // setInterval(getactualpressuretime, 300);
+      // setInterval(checkautotestchange, ms);
+      setInterval(checkr12connection, 5189);
+      setInterval(checkhmiconnection, 5548);
+      // setInterval(getactionbuttonstatus, 500);
+      // setInterval(gettestbuttonstatus, ms);
+      // setInterval(get_pressure_analysis_data, ms);
+      // setInterval(automanual, ms);
+      // setInterval(getalarmmessage, ms);
+      // setInterval(testparameterdata, ms);
+
+      //live_status_loop -> checkautotestchange,
+
+      async function live_status_loop() {
+        console.log("%cStarting Live Status Loop", "color:yellow");
+        var response = await fetch("/live_status_loop");
+        var jsonresponse = await response.json();
+        console.log("%cData retrieved from live status loop", "color:green");
+
+        //gettestbuttonstatus
+        console.log("%cUpdating test button status", "color:yellow");
+        var [type, color] = jsonresponse["gettestbuttonstatus"].split(":");
+        type = type.toLocaleLowerCase();
+        if (type === "air shell") {
+          document.getElementById("airshell").style.backgroundColor = color;
+        } else if (type === "air seat") {
+          document.getElementById("airseat").style.backgroundColor = color;
+        } else if (type === "hydro shell") {
+          document.getElementById("hydroshell").style.backgroundColor = color;
+        } else if (type === "hydro seat") {
+          document.getElementById("hydroseat").style.backgroundColor = color;
+        }
+        console.log("%cTest button status updated", "color:green");
+
+        //get_pressure_analysis_data
+        pressureanalysisdata(jsonresponse["pressureanalysisdata"]);
+        //automanual
+        console.log("%cUpdating automanual status", "color:yellow");
+        document.getElementById("auto").innerHTML = jsonresponse["automanual"];
+        console.log("%cAutomanual status updated", "color:green");
+        //getalarmmessage
+        console.log("%cUpdating alarm message", "color:yellow");
+        document.getElementById("alarmmsg").innerHTML =
+          jsonresponse["alarmmessage"];
+        if (jsonresponse["alarmmessage"] !== "Alarm Message") {
+          document.getElementsByClassName(
+            "alarmmessage"
+          )[0].style.animationName = "blink";
+        } else {
+          document.getElementsByClassName(
+            "alarmmessage"
+          )[0].style.animationName = "none";
+        }
+        console.log("%cAlarm message updated", "color:green");
+
+        //actionbuttonstatus
+        getactionbuttonstatus(jsonresponse["actionbuttonstatus"]);
+
+        //testparameterdata
+        console.log("%cUpdating test parameter data", "color:yellow");
+        var table = document.getElementById("testingparametertable");
+        var rowlist = table.querySelectorAll("tr > td:nth-child(2)");
+        var index = 0;
+        if (jsonresponse["testparameterdata"] != undefined) {
+          for (let key in jsonresponse["testparameterdata"]) {
+            rowlist[index].innerHTML = jsonresponse["testparameterdata"][key];
+            index++;
+          }
+          console.log("%cTesting parameter data updated", "color:green");
+        } else {
+          console.log(
+            "%cFailed to fetch testing parameter data. Possible cause : No test selected",
+            "color:red"
+          );
+        }
+      }
+
+      function pressureanalysisdata(data) {
+        console.log("%cUpdating pressure analysis data", "color:yellow");
+        if (data != undefined) {
+          document.getElementById("set_pressure").innerHTML =
+            data.set_pressure + "<span>" + data.pressure_unit + "</span>";
+          document.getElementById("set_time").innerHTML =
+            data.set_time +
+            "<span>" +
+            (data.set_time_unit == "None" ? "Secs" : data.set_time_unit) +
+            "</span>";
+          //   document.getElementById("pressure").innerHTML =
+          //   data.pressure / 10 + "<span>" + pressure_unit + "</span>";
+          // document.getElementById("actual_time").innerHTML =
+          //   data.actual_time +
+          //   "<span>" +
+          //   (data.set_time_unit == "None" ? "Secs" : data.set_time_unit) +
+          //   "</span>";
+          document.getElementById("start_pressure").innerHTML =
+            data.start_pressure / 10;
+          document.getElementById("end_pressure").innerHTML =
+            data.result_pressure / 10;
+          var status = document.getElementById("valve_status");
+          switch (data.valve_status) {
+            case 0:
+              status.innerHTML = "Leak Observed";
+              break;
+            case 1:
+              status.innerHTML = "No Leak Observed";
+              break;
+            case 2:
+              status.innerHTML = "Running";
+              break;
+            case 3:
+              status.innerHTML = "Ready to Test";
+          }
+
+          document.getElementById("status_result").innerHTML =
+            data["goodbadresult"];
+          console.log("%cPressure analysis data updated", "color:green");
+        } else {
+          console.log("%cFailed to fetch pressure analysis data", "color:red");
+        }
+      }
+
+      setInterval(live_status_loop, 2000);
+
+      function closeRFFbox() {
+        document.querySelectorAll("#overlay #rffcontainer > .field").forEach(element => {
+          element.remove()
+        });
+        document.getElementById("overlay").style.visibility = "hidden";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/Test Details.css' %}" />
+  </head>
+  <body>
+    <div class="overlay">
+      <div id="close" class="close">X</div>
+      <div class="productDetails">
+        <table border="1">
+          <tr>
+            <th colspan="4">Product Details</th>
+          </tr>
+          <tr>
+            <th>Product ID</th>
+            <td>1</td>
+            <th>Product Name</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>1</td>
+            <th>Size</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Class</th>
+            <td>1</td>
+            <th>Type</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Hshell set pressure</th>
+            <td>1</td>
+            <th>Hshell set holding time</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Hshell set duration</th>
+            <td>1</td>
+            <th>Hseat set pressure</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Hseat set holding time</th>
+            <td>1</td>
+            <th>Hseat set duration</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Ashell set pressure</th>
+            <td>1</td>
+            <th>Ashell set holding time</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Ashell set duration</th>
+            <td>1</td>
+            <th>Aseat set pressure</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Aseat set holding time</th>
+            <td>1</td>
+            <th>Aseat set duration</th>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <th>Product ID</th>
+            <td>1</td>
+            <th>Product Name</th>
+            <td>Product</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="titlebar">
+      <div class="logo">
+        <img src="{% static 'css/images/forbeslogo.jpeg' %}" alt="" />
+      </div>
+      <div class="title"><h1>VALVE TEST DETAILS</h1></div>
+      <!-- <div class="cellid"><span>Cell ID</span><span>10005</span></div> -->
+    </div>
+    <div class="body-grid">
+      <div class="item">
+        <label for="serial">Serial Number</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Select Product</label><br />
+        <select name="serial">
+          <option value=""></option>
+          <option value="2">Product 1</option>
+        </select>
+      </div>
+      <div class="item">
+        <label for="serial">INV ORG</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Header ID</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Model No</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Item Code</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">INV Item Code</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Job No</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">W1P Entity ID</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">IBR Flag</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">TPI Flag</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Rework Flag</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Repair Flag</label><br />
+        <input type="text" name="serial" />
+      </div>
+      <div class="item">
+        <label for="serial">Quality Plan Reqd</label><br />
+        <input type="text" name="serial" />
+      </div>
+    </div>
+    <div class="buttons">
+      <form action="{% url 'live_status' %}" method="post">
+        {% csrf_token %}
+        <button id="vdbutton" onclick="viewDetail">View Details</button>
+        <button type="submit">Next</button>
+        <button>Cancel</button>
+      </form>
+    </div>
+
+    <script>
+      var closeButton = document.getElementById("close");
+      var overlay = document.getElementsByClassName("overlay")[0];
+      closeButton.addEventListener("click", () => {
+        overlay.style.opacity = "0";
+        setTimeout(() => {
+          overlay.style.display = "none";
+        }, 500);
+      });
+
+      var viewdetailButton = document.getElementById("vdbutton");
+      viewdetailButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        viewDetail();
+      });
+
+      function viewDetail() {
+        var select = document.getElementsByTagName("select")[0];
+        console.log(select);
+        console.log(select.value);
+        if (select.value === "") {
+          alert("Please select any product");
+        } else {
+          overlay.style.display = "flex";
+          overlay.style.opacity = "1";
+        }
+      }
+    </script>
+  </body>
+</html>

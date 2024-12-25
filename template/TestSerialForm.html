@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/TestSerialForm.css' %}" />
+  </head>
+  <body>
+    <div class="image">
+      <img src="{% static 'css/images/scan.png' %}" alt="" />
+    </div>
+    <div class="form">
+      <form>
+        {% csrf_token %}
+        <h1>Scan Bar Code</h1>
+        <label for="sn">Serial Number</label><br />
+        <input
+          type="text"
+          oninput="getsizeclass(this)"
+          name="sn"
+          id="sninput"
+          required
+          autofocus
+        />
+        <h3 id="loadsizeclass"></h3>
+        <div class="buttons">
+          <button type="submit" formmethod="post" formaction="load_live_status">
+            Next
+          </button>
+          <button onclick='window.location.href = "r12_dashboardview"'>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="cell">
+      <div class="id">Cell ID</div>
+      <div class="value">{{ cell_id }}</div>
+    </div>
+    <div class="logo">
+      <img src="{% static 'css/images/forbeslogo.jpeg' %}" alt="" />
+    </div>
+
+    <script>
+      const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+      async function getsizeclass(element) {
+        console.log(element.value);
+        var serial = element.value;
+        var formdata = new FormData();
+        formdata.append("serial", serial);
+        var response = await fetch("/getsizeclass", {
+          method: "post",
+          headers: {
+            "x-CSRFToken": csrfToken,
+          },
+          body: formdata,
+        });
+
+        var data = await response.text();
+        console.log(data);
+        document.getElementById("loadsizeclass").innerHTML = data;
+      }
+    </script>
+  </body>
+</html>

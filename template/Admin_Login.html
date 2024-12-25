@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <img src="{% static 'css/images/tesleadbwt.png' %}" alt="logo" id="logo2">
+    <div class="container" id="container">
+      <div class="form-container sign-in-container admin">
+        <img src="{% static 'css/images/forbeslogo.jpeg' %}" alt="logo" id="logo1">
+        <form action="{% url 'admin_dashboard' %}" method="post">
+          {% csrf_token %}
+          <h1 class="in">Admin Login</h1>
+          <span>Login to start your session</span>
+          <input type="text" name="username" value="admin" placeholder="Username" />
+          <input type="password" name="password" value="admin" placeholder="Password" />
+          <button type="submit">Sign In</button>
+		  <div class="navigation">
+            <a class="atag" style="display: none;" href="#">User</a>
+             <a id="r12link" style="display: none;" class="atag" href="{% url 'r12_login' %}">R12</a>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="form-container sign-in-container r12"> 
+        <form action="#">
+          <h1 class="in">User Sign in</h1>
+          <span>or use your account</span>
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button>Sign In</button>
+          <div class="navigation">
+            <a class="atag" style="display: none;" href="#">User</a>
+            <a class="atag"  href="#">Admin</a>
+            <a class="atag" href="#">R12</a>
+          </div>
+        </form>
+      </div> -->
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left"></div>
+          <div class="overlay-panel overlay-right">
+            <img src="{% static 'css/images/tesleadbwt.png' %}" alt="logo" id="logo2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <footer>
+      <p>
+        Created with <i class="fa fa-heart"></i> by
+        <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
+        - Read how I created this and how you can join the challenge
+        <a
+          target="_blank"
+          href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/"
+          >here</a
+        >.
+      </p>
+    </footer> -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script>
+      async function checkr12() {
+        var response = await fetch("/checkr12connection")
+        if (await response.text() == "green"){
+          document.getElementById("r12link").style.display = "block";
+        } else {
+          document.getElementById("r12link").style.display = "none";
+        }
+      }
+      setInterval(checkr12, 1000);
+    </script>
+  </body>
+</html>

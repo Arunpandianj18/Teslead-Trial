@@ -1,0 +1,714 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  padding: 20px;
+  padding-top: 8px;
+  font-family: calibri;
+  overflow: hidden;
+  /* background-color: #fff3b0; */
+  background-color: #fefae0;
+  /* background-color: #90e0ef; */
+}
+
+.titlelayer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.title-img > img {
+  width: 15em;
+  margin-top: 10px;
+}
+
+body > div.titlelayer > div.title-img.tesleadlogo > img{
+  width: 10em;
+}
+
+.titlelayer > .title {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titlelayer > .title > h4 {
+  color: red;
+  position: absolute;
+  z-index: 2;
+  /* left: 22em; */
+  top: 0.6em;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+#circle {
+  display: inline-block;
+  background-color: green;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 0.7;
+}
+
+#innercircle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#innerdot {
+  background-color: green;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.titlelayer > .title > .liveborder {
+  width: 40vw;
+  height: 2.5em;
+  border: 2px solid black;
+  background-color: rgb(226, 222, 222);
+  clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);
+  position: absolute;
+  z-index: 1;
+  top: -0em;
+  /* left: 10em; */
+}
+
+.titlelayer > .title > .rectangle {
+  background-color: black;
+  width: 92%;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  color: white;
+  position: absolute;
+  top: 10px;
+  font-weight: bold;
+}
+
+.titlelayer > .title > .rectangle > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topgrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  height: 20vh;
+  margin-top: -7px;
+  margin-bottom: 7px;
+}
+
+.topgrid > div {
+  width: 100%;
+  height: 100%;
+}
+
+.rowspan4 {
+  grid-row: span 4;
+}
+
+.rowspan2 {
+  grid-row: span 2;
+}
+
+.colspan4 {
+  grid-column: span 4;
+}
+
+.topgrid .colspan2 {
+  grid-column: span 2;
+  background-color: #03045e;
+}
+
+.topgrid > .first {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 10em;
+}
+
+.topgrid .first div,
+.topgrid > .second > div {
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 90%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  text-align: center;
+}
+
+.topgrid .first > div:nth-child(1) {
+  background-color: rgb(219, 219, 219);
+  color: black;
+  margin-top: 1em;
+  margin-right: 5px;
+  position:relative;
+  left: 2px;
+}
+
+.topgrid > .second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.topgrid > .second > div:nth-child(1) {
+  background-color: inherit;
+  color: black;
+  border: 0px;
+}
+
+#fontinc {
+  width: 10em;
+  font-size: 0.8em;
+  position: absolute;
+  left: 2.5em;
+  top: 11em;
+}
+
+#auto {
+  position: absolute;
+  width: 7.5em;
+  left: 1em;
+  top: 9em;
+}
+
+
+div.topgrid > .tracker > div {
+  background-color: yellow;
+  padding: 10px;
+  border-radius: 10px;
+  height: 60%;
+  font-weight: bold;
+}
+
+#yellowbox {
+  padding-bottom: 30px;
+}
+
+.topgrid > .tracker > div > span:nth-child(1) {
+  font-size: 01em;
+}
+
+.topgrid > .tracker > div > span:nth-child(3) {
+  font-size: 3em;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  text-align: right;
+  margin-top: -5px;
+}
+
+.topgrid > .tracker > div > span:nth-child(3) > span {
+  font-size: 0.4em;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+div.topgrid > .tracker > div.bgred {
+  background-color: red;
+  color: white;
+  height: 3.8em;
+  position: relative;
+  top: -15px;
+}
+
+body > div.topgrid > div.end2end {
+  height: 50px;
+  width: 97%;
+  border-radius: 10px;
+  padding: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  position:relative;
+  top: 0em;
+}
+
+body > div.topgrid > div.end2end > div:nth-child(1) {
+  margin-left: 20px;
+}
+
+body > div.topgrid > div.end2end > div:nth-child(2){
+  margin-right: 20px;
+}
+
+body div.topgrid .moveleft {
+  margin-left: -30px;
+}
+
+body div.topgrid .moveleft > div {
+  width: 15em;
+  font-size: 20px;
+  font-weight: bold;
+  
+}
+
+.bottomgrid {
+  margin-top: -35px;
+}
+
+.bottomgrid > *{
+  display: inline-block;
+  position: absolute;
+}
+
+.machinestatus {
+  display: inline-block;
+  width: 13em;
+  /* scale: 1.15; */
+  left: 30.5em;
+  top: 15em;
+  font-weight: bold;
+}
+.machinestatus > .title {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.machinestatus > .list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.machinestatus > .list > div {
+  background-color: black;
+  color: white;
+  width: 80%;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.actionbuttons {
+  width: 25em;
+  left: 44.5em;
+}
+
+.actionbuttons > .title {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 40px;
+  position: relative;
+  top: 5px;
+}
+
+.actionbuttons > .list {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+.actionbuttons > .list > div {
+  width: 40%;
+  flex-basis: 10em;
+  height: 4em;
+  background-color: black;
+  color: white;
+  /* margin-top: 5px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  clip-path: polygon(0% 0%, 
+                    90% 0%, 
+                    100% 30%, 
+                    100% 100%, 
+                    10% 100%, 
+                    0% 75%)  ;
+}
+
+.actionbuttons > .list > div.green {
+  background-color: green;
+}
+
+.actionbuttons > .list > div.red {
+  background-color: red;
+}
+
+
+.teststatus {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 55px;
+  gap: 10px;
+  width: 24.8em;
+  height: 10em;
+  scale: 1.1;
+  font-weight: bold;
+  left: 72.6em;
+  scale: 1.1;
+}
+
+.teststatus > .statusitem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: rgb(240, 239, 239);
+  border: 2px solid #ccd5ae;
+  box-shadow: 0px 2px #ccd5ae;
+  border-radius: 10px;
+  /* margin-top: 5px; */
+  height: 3.8em;
+}
+
+.teststatus > .statusitem > .vu{
+  align-self: flex-end;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.teststatus .statusitem > .vu > .value {
+  font-size: 3em;
+  margin-top: -2px;
+}
+
+.teststatus .statusitem > .vu > .unit {
+  position: relative;
+  top: -8px;
+}
+
+
+
+.tsrtt {
+  left: 71.5em;
+  top: 33.5em;
+  scale: 1;
+}
+
+.tsrtt > .statusitem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 27em;
+}
+
+.tsrtt > .statusitem > .prop {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.tsrtt > .statusitem > .value {
+  background-color: black;
+  color: white;
+  width: 20em;
+  height: 40px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tsrtt > .statusitem:nth-child(2){
+  position: relative;
+  top: 20;
+}
+
+.testbuttons {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  gap: 10px;
+  left: 44em;
+  top: 28em;
+}
+
+.testbuttons > .title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.testbuttons > .item {
+  background-color: grey;
+  height: 45px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 1.2em;
+  width: 6.75em;
+  transition-duration: 0.1s;
+  cursor: default;
+}
+
+.testbuttons > .item:hover{
+  scale: 1.05;
+}
+
+.testbuttons > .item:active{
+  scale: 0.9;
+}
+
+.testbuttons > .cycle {
+  width: 9em;
+  font-size: 1em;
+  background-color: black;
+}
+
+.alarmmessage { 
+  position: absolute;
+  left: 43.5em;
+  top: 42.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55vw;
+  height: 5.5em;
+  background-color: blue;
+  animation-name: blink;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+  clip-path: polygon(
+    0% 50%,
+    3% 25%,
+    83% 25%,
+    86% 0%,
+    100% 0%,
+    100% 75%,
+    98% 100%,
+    0% 100%
+    );
+  }
+  
+  .msg {
+    position: relative;
+    top: 13px;
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    line-height: 1;
+    
+  }
+  
+  @keyframes blink {
+    100% {
+      background-color: red;
+  }
+}
+
+
+#dooropen {
+  position: absolute;
+  width: 12em;
+  top: 45em;
+  left: 33em;
+}
+
+.temptable {
+  width: 27em;
+  height: 30.5em;
+  top: 16em;
+  background-color: rgb(240, 239, 239);
+  background-color: #495057;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #ccd5ae;
+  font-weight: bold;
+}
+
+.temptable tr:nth-child(2n-1) > td:nth-child(1){
+  background-color: #495057;
+  color: white;
+}
+
+.temptable tr:nth-child(2n) > td:nth-child(1){
+  background-color: #677079;
+  color: white;
+}
+
+
+.temptable tr:nth-child(2n-1) > td:nth-child(2){
+  background-color: white;
+  color: black;
+}
+
+.temptable tr:nth-child(2n) > td:nth-child(2){
+  background-color: rgb(235, 229, 229);
+  color: black;
+}
+
+
+
+
+.temptable > table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  border: 0px;
+}
+
+.temptable > table td {
+  padding: 5px;
+  border: 0px;
+}
+.actionemergency {
+  animation-name: blink;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+}
+
+
+body > div.topgrid > div.tracker {
+  position: relative;
+  top: 0.5em;
+  left: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 5;
+}
+
+#overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+#rffcontainer {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+#rffcontainer h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.field {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.field select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.addoptionstodropdown {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.addoptionstodropdown .field {
+  margin-bottom: 10px;
+}
+
+.addoptionstodropdown input[type="text"] {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+}
+
+.buttons button:hover {
+  background-color: #0056b3;
+}
+
+/* Optional Enhancements */
+button:focus, input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

@@ -1,0 +1,654 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="{% static 'css/Admin Page.css' %}" />
+  </head>
+  <body>
+    <!-- <div class="sidebar">
+      <div class="logo">
+        <img src="./images/forbeslogoblue.png" alt="" />
+        <div id="closex">X</div>
+      </div>
+      <div class="panelcontent">
+        <h3 id="initial">Dashboard</h3>
+        <h3>Product</h3>
+        <h3>Analytics</h3>
+        <h3>Alarm System</h3>
+        <h3>Configuration</h3> 
+      </div>
+      <div class="profile">
+        <div class="profilepic"></div>
+        <h3>Administrator</h3>
+      </div>
+    </div> -->
+
+    <div class="panel">
+      <div class="logo">
+        <img
+          src="{% static 'css/images/forbesarcalogo.png' %}"
+          alt=""
+          id="sidemenulogo"
+        />
+      </div>
+      <div class="dashboardpanelcontent">
+        <div onclick="window.location.href='admin_dashboardview';">
+          Dashboard
+        </div>
+        <div id="initial" onclick="window.location.href='admin_product';">
+          Product
+        </div>
+        <!-- <div onclick="window.location.href='admin_analytics';">Analytics</div> -->
+        <div onclick="window.location.href='admin_alarm_system';">
+          Alarm System
+        </div>
+        <div onclick="window.location.href='admin_configuration';">
+          Configuration
+        </div>
+      </div>
+      <div class="profile">
+        <div class="profilepic"></div>
+        <h3>Administrator</h3>
+      </div>
+    </div>
+    <div id="fixeddt">
+      <div class="dt">Date & Time</div>
+      <div class="profilepic"></div>
+      <div onclick="window.location.href = '/'" class="x">X</div>
+    </div>
+    <div class="mainboard">
+      <div class="burger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div style="display: none" class="board" id="dashboard">
+        <div class="title">
+          <h1>WELCOME TO 6MT TEST RIG</h1>
+        </div>
+
+        <div class="dashboard">
+          <h3>Dashboard</h3>
+          <div class="border">
+            <div class="mainlogo">
+              <img src="{% static 'css/images/forbesblue.png' %}" alt="" />
+            </div>
+            <div class="bordercontent">
+              <!-- <h1>READY TO TEST</h1> -->
+              <div class="testoptions">
+                <form action="{% url 'test_details' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="type" value="{{ type }}" />
+                  <button type="submit">Start Test</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="items">
+          <div class="item">
+            <p>HMI Connections</p>
+            <div class="symbol">!</div>
+          </div>
+          <div class="item">
+            <p>R12 Connections</p>
+            <div class="symbol"></div>
+          </div>
+          <div class="item">
+            <p>Alarm System</p>
+            <div class="symbol">!</div>
+          </div>
+        </div>
+      </div>
+      <div id="product" class="board">
+        <div class="title product-body">
+          <h1>Product</h1>
+          <button id="productadd">Add</button>
+        </div>
+        <div class="body">
+          <table class="product-body">
+            <tr>
+              <th>Code</th>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Operations</th>
+            </tr>
+            {% for row in data %}
+            <tr>
+              <td>{{ row.0 }}</td>
+              <td>{{ row.1 }}</td>
+              <td>{{ row.2 }}</td>
+              <td class="{{row.3}}">
+                <img
+                  onclick="updateproduct(this)"
+                  src="{% static 'css/images/pencil.png' %}"
+                  alt=""
+                /><img
+                  onclick="deleteproduct(this)"
+                  src="{% static 'css/images/cross.png' %}"
+                  alt=""
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+          <div class="additem">
+            <h1 class="tit">Add Product</h1>
+            <form action="add_product" method="post">
+              {% csrf_token %}
+              <div class="form">
+                <input id="id" name="id" type="hidden" value="0" />
+                <div class="item lable">Product ID</div>
+                <div class="item input">
+                  <input
+                    id="product_id"
+                    name="product_id"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Product Name</div>
+                <div class="item input">
+                  <input
+                    id="product_name"
+                    name="product_name"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Product Description</div>
+                <div class="item input">
+                  <input
+                    id="product_description"
+                    name="product_description"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Size</div>
+                <div class="item input">
+                  <input id="size" name="size" type="text" required />
+                </div>
+                <div class="item lable">Class</div>
+                <div class="item input">
+                  <input id="class" name="class" type="text" required />
+                </div>
+                <div class="item lable">Type</div>
+                <div class="item input">
+                  <input id="type" name="type" type="text" required />
+                </div>
+                <!-- <div class="item lable">Test ID</div>
+              <div class="item input"><input type="text" /></div> -->
+
+                <div class="item lable">Actuator Type</div>
+                <div class="item input">
+                  <select id="actuator_type" name="actuatortype">
+                    <option value="AIR TO OPEN">AIR TO OPEN</option>
+                    <option value="AIR TO CLOSE">AIR TO CLOSE</option>
+                  </select>
+                </div>
+
+                <div class="item lable">Flanged Type</div>
+                <div class="item input">
+                  <select id="flanged_type" name="flangedtype">
+                    <option value="FLANGED-RF ">FLANGED-RF</option>
+                    <option value="SOCKET WELD END ">SOCKET WELD END</option>
+                    <option value="OTHER ">OTHER</option>
+                  </select>
+                </div>
+
+                <div class="item lable">Hshell set pressure</div>
+                <div class="item input">
+                  <input
+                    id="hshell_set_pressure"
+                    name="hshell_set_pressure"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Hshell set holding time</div>
+                <div class="item input">
+                  <input
+                    id="hshell_set_holding_time"
+                    name="hshell_set_holding_time"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Hshell set Duration</div>
+                <div class="item input">
+                  <input
+                    id="hshell_set_duration"
+                    name="hshell_set_duration"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Hseat set pressure</div>
+                <div class="item input">
+                  <input
+                    id="hseat_set_pressure"
+                    name="hseat_set_pressure"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Hseat set holding time</div>
+                <div class="item input">
+                  <input
+                    id="hseat_set_holding_time"
+                    name="hseat_set_holding_time"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Hseat set duration</div>
+                <div class="item input">
+                  <input
+                    id="hseat_set_duration"
+                    name="hseat_set_duration"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Ashell set pressure</div>
+                <div class="item input">
+                  <input
+                    id="ashell_set_pressure"
+                    name="ashell_set_pressure"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Ashell set holding time</div>
+                <div class="item input">
+                  <input
+                    id="ashell_set_holding_time"
+                    name="ashell_set_holding_time"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Ashell set duration</div>
+                <div class="item input">
+                  <input
+                    id="ashell_set_duration"
+                    name="ashell_set_duration"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Aseat set pressure</div>
+                <div class="item input">
+                  <input
+                    id="aseat_set_pressure"
+                    name="aseat_set_pressure"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Aseat set holding time</div>
+                <div class="item input">
+                  <input
+                    id="aseat_set_holding_time"
+                    name="aseat_set_holding_time"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="item lable">Aseat set duration</div>
+                <div class="item input">
+                  <input
+                    id="aseat_set_duration"
+                    name="aseat_set_duration"
+                    type="text"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="buttons">
+                <button type="submit" id="additemsavebutton">Save</button>
+                <button
+                  formaction=""
+                  onclick="window.location.href = 'admin_product'"
+                  id="additemcancelbutton"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: none" id="analytics" class="board">
+        <div class="title">
+          <h1>Analytics</h1>
+          <button>Add</button>
+        </div>
+        <div class="body graph">
+          <div class="chart-container">
+            <canvas id="myLineChart"></canvas>
+          </div>
+        </div>
+        <div class="body table">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Valve Serial Number</th>
+                <th>Valve Status</th>
+                <th>Set Pressure</th>
+                <th>Set Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for record in pressure_data %}
+              <tr>
+                <td>{{ record }}</td>
+                <td>{{ record }}</td>
+                <td>{{ record.valve_status }}</td>
+                <td>{{ record.set_pressure }}</td>
+                <td>{{ record.set_time }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display: none" id="alarm system" class="board alarm">
+        <div class="title alarm-body">
+          <h1>Alarm</h1>
+          <button id="alarmadd">Add</button>
+        </div>
+        <div class="body">
+          <table class="alarm-body alarmbodydata">
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Operations</th>
+            </tr>
+          </table>
+          <div class="alarmadditem">
+            <h1 class="tit">Add Alarm</h1>
+            <!-- <form onsubmit="addProduct()"> -->
+            <div class="form">
+              <div class="item lable">Alarm ID</div>
+              <div class="item input">
+                <input name="alarm_id" type="text" />
+              </div>
+              <div class="item lable">Alarm Name</div>
+              <div class="item input">
+                <input name="alarm_name" type="text" />
+              </div>
+            </div>
+            <div id="alaramadditembuttons" class="buttons">
+              <button type="submit" id="alarmsave">Save</button>
+              <button type="submit" id="alarmcancel">Cancel</button>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+
+      <div style="display: none" id="configuration" class="board">
+        <h1>Configuration</h1>
+        <h2 class="sideheading">R12 Database Connectivity</h2>
+        <div class="config-grid">
+          <div class="item lable">FM ARCA Host Address</div>
+          <div class="item input"><input type="text" name="address" /></div>
+          <div class="item lable">FM ARCA Port</div>
+          <div class="item input"><input type="text" name="port" /></div>
+          <div class="item lable">FM ARCA Database</div>
+          <div class="item input"><input type="text" name="database" /></div>
+          <div class="item lable">FM ARCA Option</div>
+          <div class="item input"><input type="text" name="option" /></div>
+          <div class="item lable">FM ARCA Username</div>
+          <div class="item input"><input type="text" name="Username" /></div>
+          <div class="item lable">FM ARCA Password</div>
+          <div class="item input"><input type="text" name="password" /></div>
+        </div>
+        <h2 class="sideheading second">HMI Connectivity</h2>
+        <div class="second-flex">
+          <div class="combo">
+            <div class="item lable">HMI IP Address</div>
+            <div class="item input">
+              <input type="text" name="hmiipaddress" />
+            </div>
+          </div>
+          <div class="combo">
+            <div class="item lable">HMI Port</div>
+            <div class="item input"><input type="text" name="hmiport" /></div>
+          </div>
+        </div>
+        <h2 id="other">Other Settings</h2>
+        <div class="first-flex">
+          <div class="combo">
+            <div class="item lable">Good Result</div>
+            <div class="item input"><input type="text" name="cellid" /></div>
+          </div>
+          <div class="combo">
+            <div class="item lable">Bad Result</div>
+            <div class="item input">
+              <input type="text" name="hmiipaddress" />
+            </div>
+          </div>
+          <div class="combo">
+            <div class="item lable">Cell ID</div>
+            <div class="item input"><input type="text" name="cellid" /></div>
+          </div>
+        </div>
+        <div class="connections">
+          <div class="card">
+            <div class="toggle">
+              <label class="toggle-btn">
+                <input type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="content">
+              <h3>R12 Connection</h3>
+              <p>
+                Enable oracle database connection and to enable live user
+                account
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="toggle">
+              <label class="toggle-btn">
+                <input type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="content">
+              <h3>Alarm System</h3>
+              <p>Enable this option to display alarm message in the screen.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="toggle">
+              <label class="toggle-btn">
+                <input type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="content">
+              <h3>HMI Connection</h3>
+              <p>Enable this option to start the RW communication in the HMI</p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button>Save</button>
+          <button>Cancel</button>
+        </div>
+      </div>
+      <div style="display: none" id="report" class="board">
+        <div class="title">
+          <h1>Send Data to R12</h1>
+          <input type="text" placeholder="Search.." />
+        </div>
+        <div class="body">
+          <table>
+            <tr>
+              <th>col 1</th>
+              <th>col 1</th>
+              <th>col 1</th>
+              <th>col 1</th>
+              <th>col 1</th>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+              <td>Data</td>
+            </tr>
+          </table>
+        </div>
+        <div class="buttons">
+          <button class="send">Send</button>
+          <button class="cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/Admin Page.js' %}"></script>
+    <script>
+      window.addEventListener("beforeunload",() => fetch("/logout"));
+    </script>
+  </body>
+</html>

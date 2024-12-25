@@ -1,0 +1,5 @@
+product,valve_serial_number,test_type,driving_param1_value,set_pressure,duration
+jaga,M4A2309900,Arca Hydro Seat,"40 NB (1 1/2"")",34,654
+jaga,M4A2309900,Arca Air Seat,"40 NB (1 1/2"")",4,4
+jaga,M4A2309900,Arca Air Shell,"40 NB (1 1/2"")",3,8
+jaga,M4A2309900,Arca Hydro Shell,"40 NB (1 1/2"")",354,64

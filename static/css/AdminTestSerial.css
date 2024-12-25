@@ -1,0 +1,299 @@
+* {
+    padding: 0px;
+    margin: 0px;
+  }
+  
+  body {
+      overflow: hidden;
+      font-family: calibri;
+  }
+
+  body > * {
+    z-index: 0;
+  }
+  
+  .image > img {
+    width: 36em;
+    border-radius: 30px;
+    position: absolute;
+    left: 80px;
+    top: 15px;
+  }
+  
+  .form {
+    position: relative;
+    left: 45em;
+    top: 13em;
+  }
+  
+  .form h1 {
+    font-size: 4em;
+  }
+  
+  .form label {
+    font-size: 2em;
+    font-weight: bold;
+    position: relative;
+    top: 40px;
+  }
+  
+  .form input {
+    position: relative;
+    top: 60px;
+    width: 20em;
+    border: 0px;
+    border-bottom: 3px solid black;
+    font-size: 1.5em;
+  }
+  
+  .form input:focus{
+    outline: none;
+  }
+  
+  .form .buttons {
+    position: relative;
+    top: 12em;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .form .buttons > button{
+      font-size: 1em;
+      width: 7em;
+      height: 30px;
+      border: 0px;
+      border-radius: 5px;
+      background-color: red;
+      color: white;
+      padding: 3px 0px;
+  }
+
+  .form .buttons > button:hover {
+    background-color: rgb(196, 6, 6);
+  }
+  
+  .cell {
+      position: relative;
+      left: 82.5em;
+      top: -12em;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+  }
+  
+  .cell > .id{
+      font-size: 1.5em;
+      font-weight: bold;
+  }
+  
+  .cell > .value {
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5em;
+      width: 5.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      padding: 3px 0px;
+  }
+  
+  .logo > img {
+      width: 17em;
+      position: relative;
+      left: 79em;
+      top: 25em;
+  }
+
+  #productlabel {
+    position: relative;
+    top: 2.5em;
+  }
+
+  #productfield {
+    position: relative;
+    font-size: 1.5em;
+    top: 4em;
+    border: 0px;
+    border-bottom: 3px solid black;
+    width: 20em;
+    outline: none;
+  }
+
+
+
+
+
+
+
+
+
+
+  
+/* .overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000099;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    transition-duration: 0.5s;
+    opacity: 0;
+    display: none;
+    z-index: 1;
+}
+
+.overlay .close {
+    font-size: 2em;
+    color: white;
+    margin: 70px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    
+}
+
+.hide {
+    opacity: 0;
+}
+
+.productDetails {
+    width: 50vw;
+    height: 60vh;
+    position: absolute;
+    background-color: white;
+    border: 2px solid black;
+    left: 25vw;
+    top: 20vh;
+    transition-duration: 0.5s;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.productDetails table {
+    width: 100%;
+    text-align: left;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+.productDetails table th[colspan]{
+    text-align: center;
+    font-size: 2em;
+}
+
+.productDetails table th, .productDetails table td {
+    padding-left: 10px;
+} */
+
+
+
+
+
+
+
+
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    opacity: 0;
+    display: none;
+    z-index: 1000; 
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay .close {
+    font-size: 1.5rem;
+    color: #ffffff;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.overlay .close:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.productDetails {
+    width: 70%;
+    max-width: 800px;
+    height: auto; 
+    background-color: #f9f9f9;
+    border: 2px solid #333;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    overflow-y: auto; 
+}
+
+.productDetails table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.productDetails table th[colspan] {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    background-color: #eaeaea;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.productDetails table th,
+.productDetails table td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    color: #444;
+}
+
+.productDetails table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.productDetails table td {
+    background-color: #fff;
+}
+
+.productDetails table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+.productDetails table tr:hover td {
+    background-color: #e6f7ff;
+}
+
+
+#sizeclass {
+    position: absolute;
+    top: 9.3em;
+    font-size: 2.3em;
+    color: red;
+}

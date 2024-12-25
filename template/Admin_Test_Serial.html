@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/AdminTestSerial.css' %}" />
+  </head>
+  <body>
+
+    <div class="overlay">
+        <div id="close" class="close">X</div>
+        <div class="productDetails">
+          <table border="1">
+            <tr>
+              <th colspan="4">Product Details</th>
+            </tr>
+            <tr>
+              <th>Product ID</th>
+              <td id="product_id">1</td>
+              <th>Product Name</th>
+              <td id="product_name">Product</td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td id="product_description">1</td>
+              <th>Size</th>
+              <td id="size">Product</td>
+            </tr>
+            <tr>
+              <th>Class</th>
+              <td id="class">1</td>
+              <th>Type</th>
+              <td id="type">Product</td>
+            </tr>
+            <tr>
+              <th>Hshell set pressure</th>
+              <td id="hshell_set_pressure">1</td>
+              <th>Hshell set holding time</th>
+              <td id="hshell_set_holding_time">Product</td>
+            </tr>
+            <tr>
+              <th>Hshell set duration</th>
+              <td id="hshell_set_duration">1</td>
+              <th>Hseat set pressure</th>
+              <td id="hseat_set_pressure">Product</td>
+            </tr>
+            <tr>
+              <th>Hseat set holding time</th>
+              <td id="hseat_set_holding_time">1</td>
+              <th>Hseat set duration</th>
+              <td id="hseat_set_duration">Product</td>
+            </tr>
+            <tr>
+              <th>Ashell set pressure</th>
+              <td id="ashell_set_pressure">1</td>
+              <th>Ashell set holding time</th>
+              <td id="ashell_set_holding_time">Product</td>
+            </tr>
+            <tr>
+              <th>Ashell set duration</th>
+              <td id="ashell_set_duration">1</td>
+              <th>Aseat set pressure</th>
+              <td id="aseat_set_pressure">Product</td>
+            </tr>
+            <tr>
+              <th>Aseat set holding time</th>
+              <td id="aseat_set_holding_time">1</td>
+              <th>Aseat set duration</th>
+              <td id="aseat_set_duration">Product</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+
+    <div class="image">
+      <img src="{% static 'css/images/scan.png' %}" alt="" />
+    </div>
+    <div class="form">
+      <form>
+        {% csrf_token %}
+        <h1>Scan Bar Code</h1>
+        <label for="sn">Serial Number</label><br />
+        <input type="text" name="sn" required autofocus /><br>
+        <h3 id="sizeclass"></h3>
+        <label id="productlabel">Product</label><br />
+        <select required id="productfield" onchange="getproductsizeclass(this)" name="product">
+          <option value=""></option>
+          {% for product in products %}
+            <option value="{{product.id}}">{{product.product_name}}</option>
+            {% endfor %}
+        </select>
+
+        <div class="buttons">
+        <button id="vdbutton">View Details</button>
+          <button type="submit" formmethod="post" formaction="{% url 'live_status' %}">Next</button>
+          <button onclick='window.location.href = "admin_dashboardview"'>Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="cell">
+      <div class="id">Cell ID</div>
+      <div class="value">{{ cell_id }}</div>
+    </div>
+    <div class="logo">
+      <img src="{% static 'css/images/forbeslogo.jpeg' %}" alt="" />
+    </div>
+
+
+    <script>
+        var closeButton = document.getElementById("close");
+        var overlay = document.getElementsByClassName("overlay")[0];
+        closeButton.addEventListener("click", () => {
+          overlay.style.opacity = "0";
+          setTimeout(() => {
+            overlay.style.display = "none";
+          }, 500);
+        });
+  
+        var viewdetailButton = document.getElementById("vdbutton");
+        viewdetailButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          viewDetail();
+        });
+  
+        function viewDetail() {
+          var select = document.getElementsByTagName("select")[0];
+          console.log(select);
+          console.log(select.value);
+          if (select.value === "") {
+            alert("Please select any product");
+          } else {
+            overlay.style.display = "flex";
+            overlay.style.opacity = "1";
+          }
+        }
+
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        async function getproductsizeclass(element) {
+          var formdata = new FormData();
+          formdata.append("pro", element.value);
+          var response = await fetch("/getproductsizeclass",{
+            method: "post",
+          headers: {
+            "x-CSRFToken": csrfToken,
+          },
+          body: formdata,
+          })
+          var data = await response.json();
+          document.getElementById("sizeclass").innerHTML = "Size : " + data.size + "  Class : " + data.class;
+
+          for (let key in data){
+            console.log(key)
+            if (key == "id") continue;
+            try{
+              document.getElementById(key).innerHTML = data[key];
+            } catch (error){
+              console.log("[error] " + error)
+            }
+          }
+        }
+      </script>
+  </body>
+</html>

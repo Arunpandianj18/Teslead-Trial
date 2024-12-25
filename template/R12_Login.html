@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>R12 Login</title>
+    <link rel="stylesheet" href="{% static 'css/R12_Login.css' %}" />
+  </head>
+  <body>
+    <h1 id="error">{{error}}</h1>
+    <div class="overlay">
+      <div id="close" class="close">X</div>
+      <div class="productDetails">
+        <form action="{% url 'loginr12' %}" method="post">
+            {% csrf_token %}
+          <h1>Enter Password</h1>
+          <input id="passfield" type="password" name="password" />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+
+
+
+
+
+
+    <img
+      class="forbeslogo"
+      src="{% static 'css/images/forbeslogoblue.png' %}"
+      alt="Forbes Logo"
+    />
+    <img
+      class="tesleadlogo"
+      src="{% static 'css/images/tesleadbwt.png' %}"
+      alt="Teslead Logo"
+    />
+
+    <h1 class="title">R12 Login Page</h1>
+
+    <form id="back" action="{% url 'admin_login' %}">
+      <button type="submit">← Back</button>
+    </form>
+
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Cell ID</th>
+            <th>OPR Token</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for operator in operators %}
+          <tr onclick="viewDetail()">
+            <td class="uniqueid" style="display: none">{{ operator.id }}</td>
+            <td>{{ operator.cell_id }}</td>
+            <td>{{ operator.opr_token }}</td>
+            <td>{{ operator.first_name }}</td>
+            <td>{{ operator.last_name }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <script src="{% static 'js/R12_Login.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+    overflow: hidden;
+    font-family: calibri;
+}
+
+.image > img {
+  width: 36em;
+  border-radius: 30px;
+  position: absolute;
+  left: 80px;
+  top: 15px;
+}
+
+.form {
+  position: relative;
+  left: 45em;
+  top: 13em;
+}
+
+.form h1 {
+  font-size: 4em;
+}
+
+.form label {
+  font-size: 2em;
+  font-weight: bold;
+  position: relative;
+  top: 40px;
+}
+
+.form input {
+  position: relative;
+  top: 60px;
+  width: 20em;
+  border: 0px;
+  border-bottom: 3px solid black;
+  font-size: 1.5em;
+}
+
+.form input:focus{
+  outline: none;
+}
+
+.form .buttons {
+  position: relative;
+  top: 10em;
+  display: flex;
+  gap: 10px;
+}
+
+.form .buttons > button{
+    font-size: 1em;
+    width: 7em;
+    height: 30px;
+    border: 0px;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    padding: 3px 0px;
+}
+
+.cell {
+    position: relative;
+    left: 82.5em;
+    top: -7em;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cell > .id{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.cell > .value {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 5.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 3px 0px;
+}
+
+.logo > img {
+    width: 17em;
+    position: relative;
+    left: 79em;
+    top: 29em;
+}
+
+
+#loadsizeclass {
+  position: absolute;
+  top: 7.5em;
+  font-size: 2em;
+  color: red;
+}

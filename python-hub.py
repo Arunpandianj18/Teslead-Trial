@@ -1,4 +1,1 @@
-print("Hello World")
-print("HI")
-print("Welcome")
-print ("tab1")
+123
